@@ -13,7 +13,7 @@ n_subjects = 285
 models = [KNeighborsClassifier(n_neighbors=3), SVC(), DecisionTreeClassifier()]
 
 
-def select_features(X: pd.DataFrame, y: list, frequency_bands: dict):
+def select_features(X: pd.DataFrame, y: np.array, frequency_bands: dict):
 
     loo = LeaveOneOut()
     nca = NCAFSC(fit_method='average', n_splits=19,
