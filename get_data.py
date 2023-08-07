@@ -63,7 +63,7 @@ def get_data(frequency_bands: dict):
                                     .reshape((n_sensors, n_sensors)))
 
                     # Get the values from the lower triangle
-                    indices = np.tril_indices(n_sensors)
+                    indices = np.tril_indices(n_sensors, -1)
                     coherence = connectivity[indices]
 
                     # Add it to the features dataframe
