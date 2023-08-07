@@ -14,7 +14,8 @@ all_subjects = pd.read_csv(participants_file, sep='\t')
 subjects_data = pd.read_csv('../brain-age-benchmark-paper/omega_subjects.csv')
 
 n_sensors = 262
-n_features_band = int(n_sensors * (n_sensors+1)/2)
+# We don't keep the diagonal of the connectivity matrix
+n_features_band = int(n_sensors * (n_sensors-1)/2)
 n_subjects = 285
 
 
