@@ -3,7 +3,7 @@ import numpy as np
 
 def get_features_name(features: dict, sensors: list):
     n_sensors = len(sensors)
-    indices = np.tril_indices_from(np.zeros((n_sensors, n_sensors)))
+    indices = np.tril_indices_from(np.zeros((n_sensors, n_sensors)), -1)
 
     features_name = {}
 
