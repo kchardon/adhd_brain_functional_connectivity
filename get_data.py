@@ -1,9 +1,9 @@
 import mne
-from mne_connectivity import spectral_connectivity_epochs
 import pandas as pd
 import os
 import pathlib
 import numpy as np
+from compute_coh import compute_connectivity
 
 # Path to the data
 bids_root = pathlib.Path('/storage/store2/data/Omega')
@@ -54,14 +54,9 @@ def get_data(frequency_bands: dict):
                 for band in frequency_bands:
                     # Compute the coherence for each subject for each
                     # frequency band
-                    connectivity = spectral_connectivity_epochs(
+                    connectivity = compute_connectivity(
                         epoch, fmin=frequency_bands[band][0],
-                        fmax=frequency_bands[band][1], n_jobs=60,
-                        mode='multitaper', method='coh')
-
-                    connectivity = ((connectivity.get_data()**2)
-                                    .mean(axis=1)
-                                    .reshape((n_sensors, n_sensors)))
+                        fmax=frequency_bands[band][1])
 
                     # Get the values from the lower triangle
                     indices = np.tril_indices(n_sensors, -1)
