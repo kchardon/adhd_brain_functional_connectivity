@@ -7,7 +7,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 n_sensors = 262
-n_features_band = int(n_sensors * (n_sensors+1)/2)
+n_features_band = int(n_sensors * (n_sensors-1)/2)
 n_subjects = 285
 
 models = [KNeighborsClassifier(n_neighbors=3), SVC(), DecisionTreeClassifier()]
