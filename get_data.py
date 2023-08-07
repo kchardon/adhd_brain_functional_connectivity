@@ -1,5 +1,5 @@
 import mne
-from mne_connectivity import spectral_connectivity_time
+from mne_connectivity import spectral_connectivity_epochs
 import pandas as pd
 import os
 import pathlib
@@ -12,29 +12,19 @@ deriv_root = pathlib.Path('/storage/store3/work/kachardo/derivatives/omega')
 participants_file = os.path.join(bids_root, "participants.tsv")
 all_subjects = pd.read_csv(participants_file, sep='\t')
 subjects_data = pd.read_csv('../brain-age-benchmark-paper/omega_subjects.csv')
-'''
-frequency_bands = {
-    "delta": (0.3, 4),
-    "theta": (4.0, 8.0),
-    "alpha": (8.0, 12.0),
-    "beta": (12.0, 30.0),
-    "gamma": (30.0, 60.0)
-}
-'''
-frequency_bands = {"alpha": (8.0, 12.0)}
+
 n_sensors = 262
 n_features_band = int(n_sensors * (n_sensors+1)/2)
 n_subjects = 285
 
 
-def get_data():
+def get_data(frequency_bands: dict):
 
-    # X = pd.DataFrame({"delta": [np.zeros((n_subjects, n_features_band))],
-    #                  "theta": [np.zeros((n_subjects, n_features_band))],
-    #                  "alpha": [np.zeros((n_subjects, n_features_band))],
-    #                  "beta": [np.zeros((n_subjects, n_features_band))],
-    #                  "gamma": [np.zeros((n_subjects, n_features_band))]})
-    X = pd.DataFrame({"alpha": [np.zeros((n_subjects, n_features_band))]})
+    columns = {}
+    for i in frequency_bands:
+        columns[i] = [np.zeros((n_subjects, n_features_band))]
+
+    X = pd.DataFrame(columns)
     subjects = []
     y = []
 
@@ -63,9 +53,9 @@ def get_data():
                 for band in frequency_bands:
                     # Compute the coherence for each subject for each
                     # frequency band
-                    connectivity = spectral_connectivity_time(
-                        epoch[5], 10, fmin=frequency_bands[band][0],
-                        fmax=frequency_bands[band][1], n_jobs=40,
+                    connectivity = spectral_connectivity_epochs(
+                        epoch, fmin=frequency_bands[band][0],
+                        fmax=frequency_bands[band][1], n_jobs=60,
                         mode='multitaper', method='coh')
 
                     connectivity = ((connectivity.get_data()**2)
@@ -87,4 +77,4 @@ def get_data():
 
     sensors = epoch.ch_names
 
-    return X, y, subjects, sensors
+    return X, np.array(y), subjects, sensors
