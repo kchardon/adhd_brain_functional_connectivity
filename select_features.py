@@ -6,14 +6,12 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-n_sensors = 262
-n_features_band = int(n_sensors * (n_sensors-1)/2)
-n_subjects = 285
-
 models = [KNeighborsClassifier(n_neighbors=3), SVC(), DecisionTreeClassifier()]
 
 
 def select_features(X: pd.DataFrame, y: np.array, frequency_bands: dict):
+    n_features_band = X.iloc[0, 0].shape[1]
+    n_subjects = X.iloc[0, 0].shape[0]
 
     loo = LeaveOneOut()
     nca = NCAFSC(fit_method='average', n_splits=19,
