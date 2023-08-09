@@ -10,7 +10,7 @@ We thus decided to reproduce some results from other papers using Omega with our
 
 In \[[5](#adhd-connectivity)\], the authors present a classification between Control subjects and subjects with ADHD. However, in the version of Omega that I used, I didn't have any information on ADHD and the different classes were Control, Parkinson and Chronic Pain. I thus decided to make a classification between Control and Parkinson's using Omega.
 
-To do that, I first wrote a function (in *get_data_omega.py*) to collect Omega data, compute the coherence (connectivity) and get the class for each subject. At first, I used the function *spectral_connectivity_epochs* from MNE \[[8](#mne)\] and MNE-Connectivity \[[9](#mne-connectivity)\] but the resulting coherence matrices were not as expressive as the one in the paper. I thus wrote a function in *compute_coh.py* to compute the coherence with the same formula as in \[[5](#adhd-connectivity)\].
+To do that, I first wrote a function (in *get_data_omega.py*) to collect Omega data, compute the coherence (connectivity) and get the class for each subject. At first, I used the function *spectral_connectivity_epochs* from MNE \[[8](#mne)\] and MNE-Connectivity \[[9](#mne-connectivity)\] but the resulting coherence matrices were not as expressive as the in the paper. I thus wrote a function in *compute_coh.py* to compute the coherence with the same formula as in \[[5](#adhd-connectivity)\] :
 
 For each band $\in$ { $\delta, \theta, \alpha, \beta, \gamma$ }, for each pair of sensors $xy$, the coherence is computed as
 
@@ -18,7 +18,7 @@ $$COH^{band}\_{xy} = \sum\_{f \in band}{\frac{|S_{xy}(f)|^2}{S_{xx}(f)S_{yy}(f)}
 
 with $S_{xy}(f)$ the cross-power spectral density, and $S_{xx}(f)$ and $S_{yy}(f)$ the respective auto-power spectral densities.
 
-With the coherence computed like this, the matrices were still pretty bad. To see if it was a dataset problem, I wanted to test other ones. Some other studies have been made on the same task with MEG datasets \[[11](#conn), [12](#conn2)\] but the datasets were not available. We thus decided to test the model on an EEG dataset that we had \[[10](#ds)\]. The code to get the data is available in *get_data_ds.py*.
+With the coherence computed like this, the matrices were still pretty bad. To see if it was a dataset problem, I wanted to test other ones. Some other studies have been made on the same task with MEG datasets \[[11](#conn), [12](#conn2)\] but the datasets were not available. We thus decided to test the model on an EEG dataset that we had \[[10](#ds)\]. The code to get the data is available in *get_data_ds.py*. Furthermore, other studies using EEG datasets for classification between Control subjects and subjects with Parkinson's are available \[[13](#eeg), [14](#eeg2)\], which makes it possible to compare the results found in this second task.
 
 In *select_features.py*, I use Neighborhood Component Analysis (NCA) for feature selection. I use the package *ncafs* from \[[6](#ncafs)\] that implements NCA feature selection presented in \[[7](#nca)\] and which is used in \[[5](#adhd-connectivity)\]. To select the features, I run a leave-one-out and fit the NCA on the training set. I store the 5 selected features at each fold and, at the end, select the features that appear in at least 50% of the folds. If fewer than 5 features are selected at the end, I take the most selected features to have 5 features to use.
 
@@ -52,6 +52,10 @@ Finally, in *model_classif.py*, I wrote the function to test the three different
 
 <div id="ds">[10] Arun Singhet al. <em>Rest eyes open</em>. In : OpenNeuro (2023). https://doi.org/doi:10.18112/openneuro.ds004584.v1.0.0</div>
 
-<div id="conn">[11] Amine Khadmaoui et al. <em>MEG Analysis of Neural Interactions in Attention-Deficit/Hyperactivity Disorder</em>. In : Computational Intelligence and Neuroscience (2016), p. 1-10. https://doi.org/10.1155/2016/8450241.</div>
+<div id="conn">[11] Amine Khadmaoui et al. <em>MEG Analysis of Neural Interactions in Attention-Deficit/Hyperactivity Disorder</em>. In : Computational Intelligence and Neuroscience (2016), p. 1-10. https://doi.org/10.1155/2016/8450241</div>
 
-<div id="conn2">[12] Muthuraman Muthuraman et al. <em>Multimodal alterations of directed connectivity profiles in patients with attention-deficit/hyperactivity disorders</em>. In : Scientific Reports 9, p. 20028. https://doi.org/10.1038/s41598-019-56398-8. </div>
+<div id="conn2">[12] Muthuraman Muthuraman et al. <em>Multimodal alterations of directed connectivity profiles in patients with attention-deficit/hyperactivity disorders</em>. In : Scientific Reports 9 (2019), p. 20028. https://doi.org/10.1038/s41598-019-56398-8</div>
+
+<div id="eeg">[13] Rajamanickam Yuvaraj et al. <em>Inter-hemispheric EEG coherence analysis in Parkinson’s disease: Assessing brain activity during emotion processing</em>. In : J Neural Transm 122 (2015), p. 237–252. https://doi.org/10.1007/s00702-014-1249-4</div>
+
+<div id="eeg2">[14] Mariana Gongora et al. <em>EEG Coherence as a diagnostic tool to measure the initial stages of Parkinson Disease</em>. In : Medical Hypotheses 123 (2018), p. 74-78. https://doi.org/10.1016/j.mehy.2018.12.014</div>
