@@ -52,7 +52,6 @@ def get_data_omega(frequency_bands: dict):
                 for band in frequency_bands:
                     # Compute the coherence for each subject for each
                     # frequency band
-                    print(len(epoch.ch_names))
                     connectivity = compute_connectivity(
                         epoch, fmin=frequency_bands[band][0],
                         fmax=frequency_bands[band][1], n_sensors=n_sensors)
