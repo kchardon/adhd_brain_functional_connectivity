@@ -40,7 +40,7 @@ Finally, in *model_classif.py*, I wrote the function to test the three different
 
 <div id="omega-data">[4] <em>Open MEG Archive Repository</em>. https://doi.org/10.23686/0015896</div>
 
-<div id="adhd-connectivity">[5] Nastaran Hamedi et al. <em>Detecting ADHD Based on Brain Functional Connectivity Using Resting-State MEG Signals.</em>. In : Frontiers in Biomedical Technologies 9 (2022), p. 110-118. https://doi.org/10.18502/fbt.v9i2.8850</div>
+<div id="adhd-connectivity">[5] Nastaran Hamedi et al. <em>Detecting ADHD Based on Brain Functional Connectivity Using Resting-State MEG Signals</em>. In : Frontiers in Biomedical Technologies 9 (2022), p. 110-118. https://doi.org/10.18502/fbt.v9i2.8850</div>
 
 <div id="ncafs">[6] Pedro Paiva. <em>Neighborhood Component Analysis Feature Selection library</em>. https://pypi.org/project/ncafs/</div>
 
