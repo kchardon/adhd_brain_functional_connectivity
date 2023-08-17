@@ -39,14 +39,13 @@ def get_data_omega(frequency_bands: dict):
                                                                 'Parkinson']):
 
             session = int(subjects_data[subjects_data['subject_id'] ==
-                                        subject[4:]]['session'])
-
+                                        subject[4:]]['session'].iloc[0])
             epoch = mne.read_epochs(pathlib.Path(
                 os.path.join(deriv_root, subject, 'ses-0'+str(session), 'meg',
                              subject + '_ses-0'+str(session) +
                              '_task-rest_proc-clean_epo.fif')),
                              verbose=False)
-            epoch = epoch.pick('mag')  # Keep only magnometers
+            epoch = epoch.pick('mag', verbose=False)  # Keep only magnometers
 
             if len(epoch.ch_names) == n_sensors:
                 for band in frequency_bands:
@@ -55,7 +54,6 @@ def get_data_omega(frequency_bands: dict):
                     connectivity = compute_connectivity(
                         epoch, fmin=frequency_bands[band][0],
                         fmax=frequency_bands[band][1], n_sensors=n_sensors)
-
                     # Get the values from the lower triangle
                     indices = np.tril_indices(n_sensors, -1)
                     coherence = connectivity[indices]
