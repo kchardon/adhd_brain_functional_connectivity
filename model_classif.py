@@ -6,6 +6,8 @@ from sklearn.metrics import (accuracy_score, balanced_accuracy_score,
                              make_scorer)
 import pandas as pd
 import numpy as np
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, append=True)
 
 models = [KNeighborsClassifier(n_neighbors=3), SVC(), DecisionTreeClassifier()]
 
