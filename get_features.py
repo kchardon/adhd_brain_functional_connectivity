@@ -10,8 +10,8 @@ def get_features_name(features: dict, sensors: list, frequency_bands: dict):
     for band in frequency_bands:
         features_name = {}
 
-        first_sensor = indices[0][features]
-        second_sensor = indices[1][features]
+        first_sensor = indices[0][features[band]]
+        second_sensor = indices[1][features[band]]
 
         for i in range(len(first_sensor)):
             features_name[i] = (sensors[first_sensor[i]],
